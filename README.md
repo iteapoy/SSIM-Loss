@@ -6,7 +6,7 @@
 
 SSIM RGB图像按三个通道分别计算并求平均。
 
-calculate ssim loss of RGB image in each channel, and then calculate the mean of SSIM loss in three channels. 
+calculate ssim loss of RGB image in each channel, and then calculate the mean SSIM loss in three channels. 
 
 
 
