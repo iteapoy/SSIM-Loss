@@ -50,17 +50,24 @@ def SSIM(img1, img2, k1=0.01, k2=0.02, L=1, window_size=11):
 
     return tf.reduce_mean(ssim_map)
 
+def tf_log10(x):
+    numerator = tf.log(x)
+    denominator = tf.log(tf.constant(10, dtype=numerator.dtype))
+    return numerator / denominator
+
+def PSNR(y_true, y_pred):
+    max_pixel = 255.0
+    return 10.0 * tf_log10((max_pixel ** 2) / (tf.reduce_mean(tf.square(y_pred - y_true))))
 
 if __name__ == '__main__':
     img1 = np.array(scipy.misc.imread('gt.png', mode='RGB').astype('float32'))
-    img2 = np.array(scipy.misc.imread('118.png', mode='RGB').astype('float32'))
+    img2 = np.array(scipy.misc.imread('val_9310.png', mode='RGB').astype('float32'))
 
     img1 = tf.constant(img1)
     img2 = tf.constant(img2)
 
     _SSIM_ = tf.image.ssim(img1, img2, 1.0)
-    _PSNR_ = tf.image.psnr(img2, img1, 1.0)
-
+    _PSNR_ = tf.image.psnr(img1, img2, 255.0)
 
     rgb1 = tf.unstack(img1, axis=2)
     r1 = rgb1[0]
@@ -77,12 +84,14 @@ if __name__ == '__main__':
     ssim_b=SSIM(b1,b2)
 
     ssim = tf.reduce_mean(ssim_r+ssim_g+ssim_b)/3
+    psnr = PSNR(img1, img2)
 
 
     with tf.Session() as sess:
         print(sess.run(_SSIM_))
         print(sess.run(_PSNR_))
         print(sess.run(ssim))
+        print(sess.run(psnr))
 
 
 
