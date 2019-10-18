@@ -12,7 +12,7 @@ tf.image.psnr()和tf.image.ssim()仅作校验，没有tensorflow 1.8.0以上的�
 ## English
 reference：https://www.jianshu.com/p/43d548ad6b5d
 
-calculate ssim loss of RGB image in each channel, and then calculate the mean SSIM loss in three channels. 
+SSIM loss of RGB image is first calculated in each channel,respectively. Then the loss is averaged in three channels.
 
 tf.image.psnr() and tf.image.ssim() are used for validation. 
-If the version of tensorflow is below 1.8.0, you can delete the related sentence. 
+If your tensorflow vision is below 1.8.0, you can delete the related sentence. 
